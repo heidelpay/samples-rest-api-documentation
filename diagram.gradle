@@ -1,0 +1,33 @@
+buildscript {	
+	repositories {
+       maven { url = uri("https://jitpack.io") }
+       maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+	    // diagram via ruby gem
+	    classpath "com.github.jruby-gradle:jruby-gradle-plugin:[1.1.4,2.0)"
+	    // graphiz; you might also have graphviz installed on your system
+	    classpath 'com.github.jeysal:gradle-graphviz-plugin:master-SNAPSHOT'
+	}
+}
+
+// asciidoctor
+apply plugin: 'org.asciidoctor.convert'
+// diagram installed as gem
+apply plugin: 'com.github.jruby-gradle.base'
+// graphviz
+apply plugin: 'com.github.jeysal.graphviz'
+
+dependencies {
+	gems 'rubygems:asciidoctor-diagram:1.5.11'
+}
+
+asciidoctor { 
+	sourceDir = file('src/docs')
+	outputDir = file('build/docs')
+	dependsOn jrubyPrepare	
+	requires = ['asciidoctor-diagram']
+  	gemPath = jrubyPrepare.outputDir
+}
+
+

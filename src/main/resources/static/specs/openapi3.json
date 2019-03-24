@@ -1,0 +1,93 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "heidelpay API",
+    "version" : "0.1.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/heidelpay/charge" : {
+      "post" : {
+        "tags" : [ "heidelpay" ],
+        "summary" : "Charges a CreditCard.",
+        "description" : "Charges a CreditCard.",
+        "operationId" : "openapi/spec/charge",
+        "parameters" : [ {
+          "name" : "amount",
+          "in" : "query",
+          "description" : "The amount the CreditCard should be charged with.",
+          "required" : true,
+          "schema" : {
+            "type" : "number"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/heidelpay-charge1526493076"
+              },
+              "examples" : {
+                "openapi/spec/charge" : {
+                  "value" : "{\r\n  \"holder\" : \"Marsl Schmitt\",\r\n  \"cvc\" : \"111\",\r\n  \"number\" : \"4444333322221111\",\r\n  \"expiryDate\" : \"21/11\",\r\n  \"brand\" : \"VISA\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/heidelpay-charge1116014589"
+                },
+                "examples" : {
+                  "openapi/spec/charge" : {
+                    "value" : "{\r\n  \"amount\" : 12.21,\r\n  \"customer\" : \"Marsl Schmitt\",\r\n  \"date\" : \"2019-01-20T12:18:47.389\"\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "heidelpay-charge1526493076" : {
+        "type" : "object",
+        "properties" : {
+          "expiryDate" : {
+            "type" : "string",
+            "description" : "The expire date of the card. Must be in the future"
+          },
+          "number" : {
+            "type" : "string",
+            "description" : "The CreditCard number. Must be a well-formed credit card number"
+          },
+          "cvc" : {
+            "type" : "string",
+            "description" : "The CVC/CVV. Length depends on the brand. Size must be between 3 and 4 inclusive"
+          },
+          "holder" : {
+            "type" : "string",
+            "description" : "The holder of the CreditCard. "
+          },
+          "brand" : {
+            "type" : "string",
+            "description" : "The brand of the CreditCard. Must be one of [MASTER, VISA, AMEX]"
+          }
+        }
+      },
+      "heidelpay-charge1116014589" : {
+        "type" : "object"
+      }
+    }
+  }
+}
