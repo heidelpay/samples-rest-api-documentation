@@ -1,0 +1,43 @@
+[plantuml,"tmp_seq",png]
+....
+hide footbox
+skinparam handwritten true
+skinparam sequence {
+	ArrowColor #2D2926
+	ArrowFontName Aapex
+	ArrowFontColor #2D2926
+	ActorBorderColor #2D2926
+	LifeLineBorderColor #2D2926
+	LifeLineBackgroundColor #2D2926
+	
+	ParticipantBorderColor #2D2926
+	ParticipantBackgroundColor #2D2926
+	ParticipantFontName Impact
+	ParticipantFontSize 15
+	ParticipantFontColor #6cace4 
+	
+	ActorBackgroundColor #2D2926
+	ActorFontColor #2D2926
+	ActorFontSize 15
+	ActorFontName Aapex
+}
+actor Customer 
+participant Browser 
+participant Merchant 
+participant heidelpay 
+activate Customer
+Customer -> Browser : type in CC Data and pay
+	activate Browser #2D2926
+	Browser -> heidelpay : create resource /types/cards
+		activate heidelpay #2D2926
+	Browser <-- heidelpay : return reference ID
+		deactivate heidelpay
+	Browser -> Merchant : transmit reference ID
+		activate Merchant #2D2926
+		Merchant -> heidelpay : create /payment/charges
+		Merchant <-- heidelpay : return payment ID
+			deactivate heidelpay
+	Browser <-- Merchant : redirect to success Page
+		deactivate Merchant
+Customer <-- Browser : continue....
+....
