@@ -1,4 +1,4 @@
-#samples-rest-api-documentation 
+# Documenting Apis 
 
 Samples for an article we published in the Javamagazin: https://jaxenter.de/ausgaben/java-magazin-5-19
 
